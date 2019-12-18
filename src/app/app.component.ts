@@ -36,6 +36,12 @@ public tarefa="";
     }
   }
   remove(index){
-    this.model.itens.splice(index,1);
+    let a;
+    for(let i = 0;i<this.model.itens.length;i++){
+      if(index==this.model.itens[i].action){
+        a=i;
+      }
+    }
+    this.model.itens.splice(a,1);
   }
   }

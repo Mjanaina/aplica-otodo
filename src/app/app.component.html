@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
   <div class="my-1">
-    Atividade:<input class="form-control" #todoText />
+    O que precisas fazer?<input class="form-control" #todoText />
     <br>
  <div class="campoAtributo"> Escolha uma data:
       <input type="date" #todoDataLimite>
@@ -27,29 +27,47 @@
   </div>
   <div class="table " >
     <div class="table">
-      <h2 class="display-4" style="text-align: center; color: #bd0909"> Preferências altas</h2>
+      <h2 class="display-4" style="text-align: center; color: #bd0909"> Tarefas pendentes</h2>
       
 
-      <table class="table">
-      
-        <thead>
-          <tr>
-            <th></th>
-            <th>Descrição</th>
-            <th>Prazo final</th>
-            <th>Preferência</th>
-            <th>Prontas</th>
+      <table class="table" style="text-aling:center">
+           <tbody>
+             <div class="conteiner" style="text-aling:center">
+            <tr>
+            <th>Descrição</th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+            <th>Prazo final</th>&nbsp;
+            <th>Preferência</th>&nbsp;
+            <th>Prontas</th>&nbsp;
+            </tr>
+             </div>
             
-          </tr>
-        </thead>
-        <tbody *ngFor="let item of getTodoItems(); let i = index">
-          <tr *ngIf="item.prioridade=='Alta'">
+        <tbody>
+        <tr *ngFor="let item of getTodoItems(); let i = index">
+          <div *ngIf="item.prioridade=='Alta'" class="bg-warning">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.action }}</td>
+            <td>{{ item.dataTermino }}&nbsp;</td>
+            <td>{{ item.prioridade }}</td>
+            <td><input type="checkbox" [(ngModel)]="item.done" /> Sim <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+            <td> <button type="button" class="btn btn-danger" (click)="remove(i)">Remover</button> </td>
+          </div>
+           <div *ngIf="item.prioridade=='Média'" class="bg-info">
+      
             <td>{{ i + 1 }}</td>
             <td>{{ item.action }}</td>
             <td>{{ item.dataTermino }}</td>
             <td>{{ item.prioridade }}</td>
-            <td><input type="checkbox" [(ngModel)]="item.done" /></td>
-          
+            <td><input type="checkbox" [(ngModel)]="item.done" /> Sim <p> </td>
+            <td> <button type="button" class="btn btn-danger" (click)="remove(getTodoItems)">Remover</button> </td>
+           </div>
+           <div *ngIf="item.prioridade=='Baixa'" class="bg-light">
+             <td>{{ i + 1 }}</td>
+            <td>{{ item.action }}</td>
+            <td>{{ item.dataTermino }}</td>
+            <td>{{ item.prioridade }}</td>
+            <td><input type="checkbox" [(ngModel)]="item.done" /> Sim <p> </td>
+            <td> <button  type="button" class="btn btn-danger"(click)="remove(getTodoItems)">Remover</button> </td>
+           </div>
           </tr>
         </tbody>
       </table>
@@ -58,11 +76,11 @@
         <thead class="display-4;">
           <tr>
             <th>Concluídas</th>
-            <th>Done</th>
+            <th>Finalizadas</th>
           </tr>
         </thead>
         <tbody *ngFor="let item of getTodoItemsConcluidas();">
-          <tr *ngIf="item.prioridade=='Alta'">
+          <tr >
               <td style="text-decoration:line-through;"> {{ item.action }} </td>
               <td><input type="checkbox" [(ngModel)]="item.done" /></td>
           </tr>
@@ -73,117 +91,4 @@
 
   <br>
  
-  <div class="table ">
-    <div class="table">
-      <h5 class="display-4" style="text-align: center; color: #bd0909"> Preferências médias</h5>
-     
-      <table class="table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Descrição</th>
-            <th>Prazo final</th>
-            <th>Preferências</th>
-            <th>Prontas</th>
-          
-          </tr>
-        </thead>
-        <tbody *ngFor="let item of getTodoItems(); let i = index">
-          <tr *ngIf="item.prioridade=='Média'">
-              <td>{{ i + 1 }}</td>
-              <td>{{ item.action }}</td>
-              <td>{{ item.prioridade }}</td>
-              <td>{{ item.dataTermino }}</td>
-              <td><input type="checkbox" [(ngModel)]="item.done" /></td>
-              <td [ngSwitch]="item.done">
-                <span *ngSwitchCase="true">Yes</span>
-                <span *ngSwitchDefault>No</span>
-              </td>
-          </tr>
-        </tbody>
-      </table>
-     
-      <table class="table ">
-        <thead class="table">
-          <tr>
-            <th>Concluídas</th>
-            <th>Done</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let item of getTodoItemsConcluidas();">
-          <tr *ngIf="item.prioridade=='Média'">
-              <td style="text-decoration:line-through;"> {{ item.action }} </td>
-              <td><input type="checkbox" [(ngModel)]="item.done" /></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <br>
-  
-  <div class="table ">
-    <div class="ctable">
-       <h5 class="display-4" style="text-align: center; color: #bd0909"> Preferências baixas</h5>
-    
-      <table class="table ">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Descrição</th>
-            <th>Prazo final</th>
-            <th>Preferências</th>
-            <th>Prontas</th>
-            
-          </tr>
-        </thead>
-        <tbody *ngFor="let item of getTodoItems(); let i = index">
-          <tr *ngIf="item.prioridade=='Baixa'">
-              <td>{{ i + 1 }}</td>
-              <td>{{ item.action }}</td>
-              <td>{{ item.prioridade }}</td>
-              <td>{{ item.dataTermino }}</td>
-              <td><input type="checkbox" [(ngModel)]="item.done" /></td>
-              <td [ngSwitch]="item.done">
-              
-              </td>
-          </tr>
-        </tbody>
-      </table>
-    
-      <table class="table">
-        <thead class="table">
-          <tr>
-            <th>Concluídas</th>
-            <th>Done</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let item of getTodoItemsConcluidas();">
-          <tr *ngIf="item.prioridade=='Baixa'">
-              <td style="text-decoration:line-through;"> {{ item.action }} </td>
-              <td><input type="checkbox" [(ngModel)]="item.done" /></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-
-
-  <br><br>
-
-
-</div>
-
-
-
-
-  
-
-  
-  
-  
-  
-  
-  
-  
+ 

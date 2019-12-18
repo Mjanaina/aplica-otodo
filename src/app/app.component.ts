@@ -6,8 +6,9 @@ import{Model,TodoItem} from "./model";
  templateUrl: "app.component.html",
 })
 export class AppComponent  {
- model=new Model ();
 
+ model=new Model ();
+public tarefa="";
 
 
   getTodoItems() {
@@ -19,10 +20,22 @@ export class AppComponent  {
   }
 
   addItem(newItem, prioridade, dataTermino) {
+    let a = true;
+    for(let i = 0; i<this.model.itens.length;i++){
+      if(newItem==this.model.itens[i].action){
+        a = false;
+      }
+    }
     if (newItem != "") {
+      if(dataTermino!= ""){
+        if(a){
       this.model.itens.push(new TodoItem(newItem, false, prioridade, dataTermino));
       this.model.sortBydueDate();
+        }
+      }
     }
   }
-
-}
+  remove(index){
+    this.model.itens.splice(index,1);
+  }
+  }

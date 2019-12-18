@@ -7,8 +7,8 @@ export class Model {
       
         this.itens = [
             new TodoItem("Dominar o mundo", false, "Alta", "2019-10-02"),
-            new TodoItem("Falar com Trump", false, "Baixa", "2019-10-03"),
-            new TodoItem("Preparar aula", false, "Alta", "2019-10-04"),
+            new TodoItem("Matar Trump", false, "Baixa", "2019-10-03"),
+            new TodoItem("Dar 8,0 para Janaina", false, "Alta", "2019-10-04"),
             new TodoItem("Caminhar 10km", true, "Média", "2019-10-05")
         ]
     }
